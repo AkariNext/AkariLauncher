@@ -1,0 +1,3 @@
+# AkariLauncher
+
+このプロジェクトには HeliosLauncherのアセットやコードが含まれています。またこのプロジェクトはMIT LICENSEで提供されます。
