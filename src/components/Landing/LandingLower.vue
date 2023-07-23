@@ -26,7 +26,7 @@
                 <div :class="$style.launch_content">
                     <button :class="$style.launch_button" class="text-white">PLAY</button>
                     <div :class="$style.bot_divider"></div>
-                    <button :class="$style.server_selection_button" class="text-white">・Demo (Minecraft 1.19.4)</button>
+                    <button :class="[$style.server_selection_button, $style.bot_label]" class="text-white">・Demo (Minecraft 1.19.4)</button>
                 </div>
             </div>
         </div>

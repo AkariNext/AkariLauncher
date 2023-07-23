@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import { IconSettings } from '@tabler/icons-vue';
 import { useProfilesStore } from '../../store/profiles';
 import { randomBackgroundImage } from "../../utils/common"
-import { IconBrandDiscord } from '@tabler/icons-vue';
-import { IconBrandGithub } from '@tabler/icons-vue';
 import LandingLower from './LandingLower.vue';
+import { IconBrandDiscordFilled } from '@tabler/icons-vue';
+import { IconBrandGithubFilled } from '@tabler/icons-vue';
+import { IconSettingsFilled } from '@tabler/icons-vue';
 const profileStore = useProfilesStore()
 const useProfileId = profileStore.$state.selectedAccountId!
 const userUUUID = profileStore.$state.accounts[useProfileId].minecraft.profile!.id
@@ -33,13 +33,13 @@ const username = profileStore.$state.accounts[useProfileId].minecraft.profile!.n
                         </div>
                     </div>
                     <div :class="$style.mediaContent">
-                        <IconSettings class="text-white" />
+                        <IconSettingsFilled :class="$style.mediaIcon" />
                         <div :class="$style.mediaDivider"></div>
                         <div :class="$style.mediaContainer">
-                            <IconBrandDiscord class="text-white" />
+                            <IconBrandDiscordFilled :class="[$style.mediaDiscordIcon, $style.mediaIcon]" />
                         </div>
                         <div :class="$style.mediaContainer">
-                            <IconBrandGithub class="text-white" />
+                            <IconBrandGithubFilled :class="[$style.mediaGitHubIcon, $style.mediaIcon]" />
                         </div>
                     </div>
                 </div>
@@ -50,6 +50,24 @@ const username = profileStore.$state.accounts[useProfileId].minecraft.profile!.n
 </template>
 
 <style module>
+.mediaIcon {
+    color: white;
+    width: 20px;
+    transition: 0.25s ease;
+}
+
+.mediaIcon:hover {
+    transform: scale(1.2);
+}
+
+.mediaDiscordIcon:hover {
+    color: #5865F2;
+}
+
+.mediaGitHubIcon:hover {
+    color: #2a2a2a;
+}
+
 .upper {
     position: relative;
     transition: top 2s ease;
