@@ -2,8 +2,6 @@
 import { useProfilesStore } from "../store/profiles";
 import { RawProfile } from "../../electron/common";
 import IconMicrosoft from "../assets/images/HeliosLauncher/icons/microsoft.svg";
-import IconMojang from "../assets/images/HeliosLauncher/icons/mojang.svg";
-import { randomBackgroundImage } from "../utils/common"
 import { ElectronAPI } from "@electron-toolkit/preload";
 
 interface ElectronWindow extends Window {
@@ -31,13 +29,6 @@ const signin = async () => {
                         <IconMicrosoft class="h-6 w-6" />
 
                         Login with Microsoft
-                    </button>
-                </div>
-                <div>
-                    <button type="button" :class="$style.loginButton" style="">
-                        <IconMojang IconMicrosoft class="h-6 w-6" />
-
-                        Login with Mojang
                     </button>
                 </div>
             </div>
