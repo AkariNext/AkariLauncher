@@ -3,17 +3,17 @@ import { useProfilesStore } from "../store/profiles";
 import { RawProfile } from "../../electron/common";
 import IconMicrosoft from "../assets/images/HeliosLauncher/icons/microsoft.svg";
 import IconMojang from "../assets/images/HeliosLauncher/icons/mojang.svg";
-import {randomBackgroundImage} from "../utils/common"
+import { randomBackgroundImage } from "../utils/common"
 import { ElectronAPI } from "@electron-toolkit/preload";
 
 interface ElectronWindow extends Window {
-  electron: ElectronAPI
+    electron: ElectronAPI
 }
 declare const window: ElectronWindow;
 
 const signin = async () => {
-  const raw_profile: RawProfile = await window.electron.ipcRenderer.invoke('doAuth')
-  const profiles = await window.electron.ipcRenderer.invoke('addAccount', raw_profile)
+    const raw_profile: RawProfile = await window.electron.ipcRenderer.invoke('doAuth')
+    const profiles = await window.electron.ipcRenderer.invoke('addAccount', raw_profile)
 
     const profileStore = useProfilesStore()
     profileStore.$patch(profiles)
@@ -22,31 +22,47 @@ const signin = async () => {
 </script>
 
 <template>
-    <div class="h-screen w-full justify-center items-center flex"
-        :style="{ background: `url(${randomBackgroundImage})`, backgroundSize: 'cover', backgroundRepeat: 'no-repeat', backgroundPosition: 'center center' }">
-        <div>
+    <div :class="$style.signinOptionsContainer">
+        <div :class="$style.signinOptionsContent">
             <h2 class="text-center text-2xl mb-4 text-white font-bold">Login Options</h2>
             <div style="row-gap: 10px; display: flex; flex-direction: column;">
-            <div>
-                <button type="button" @click="async () => await signin()" :class="$style.loginButton">
-                    <IconMicrosoft class="h-6 w-6" />
+                <div>
+                    <button type="button" @click="async () => await signin()" :class="$style.loginButton">
+                        <IconMicrosoft class="h-6 w-6" />
 
-                    Login with Microsoft
-                </button>
-            </div>
-            <div>
-                <button type="button" :class="$style.loginButton" style="">
-                    <IconMojang IconMicrosoft class="h-6 w-6" />
+                        Login with Microsoft
+                    </button>
+                </div>
+                <div>
+                    <button type="button" :class="$style.loginButton" style="">
+                        <IconMojang IconMicrosoft class="h-6 w-6" />
 
-                    Login with Mojang
-                </button>
+                        Login with Mojang
+                    </button>
+                </div>
             </div>
         </div>
-    </div>
     </div>
 </template>
 
 <style module>
+.signinOptionsContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    transition: filter 0.25s ease;
+    background: rgba(0, 0, 0, 0.50);
+}
+
+.signinOptionsContent {
+    border-radius: 3px;
+    position: relative;
+    top: -5%;
+}
+
 .loginButton {
     color: white;
     background: rgba(0, 0, 0, 0.25);

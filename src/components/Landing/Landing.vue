@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useProfilesStore } from '../../store/profiles';
-import { randomBackgroundImage } from "../../utils/common"
 import LandingLower from './LandingLower.vue';
 import { IconBrandDiscordFilled } from '@tabler/icons-vue';
 import { IconBrandGithubFilled } from '@tabler/icons-vue';
@@ -12,41 +11,39 @@ const username = profileStore.$state.accounts[useProfileId].minecraft.profile!.n
 </script>
 
 <template>
-    <div :style="{ backgroundImage: `url(${randomBackgroundImage})`, backgroundSize: 'cover', }" class="h-screen">
-        <div :class="$style.upper">
-            <div :class="$style.left">
-                <div :class="$style.launcher_logo">
-                    <img src="https://avatars.githubusercontent.com/u/75864607" class="rounded-full border border-white" />
-                    <div :class="$style.updateAvaliableTooltip"> Update Available
-                    </div>
+    <div :class="$style.upper">
+        <div :class="$style.left">
+            <div :class="$style.launcher_logo">
+                <img src="https://avatars.githubusercontent.com/u/75864607" class="rounded-full border border-white" />
+                <div :class="$style.updateAvaliableTooltip"> Update Available
                 </div>
             </div>
-            <div :class="$style.content">
+        </div>
+        <div :class="$style.content">
 
-            </div>
-            <div :class="$style.right">
-                <div :class="$style.rightContainer">
-                    <div :class="$style.user_content">
-                        <span :class="$style.user_text" class="text-white">{{ username }}</span>
-                        <div :class="$style.avatarContainer"
-                            :style="{ backgroundImage: `url(https://mc-heads.net/body/${userUUUID}/right)` }">
-                        </div>
+        </div>
+        <div :class="$style.right">
+            <div :class="$style.rightContainer">
+                <div :class="$style.user_content">
+                    <span :class="$style.user_text" class="text-white">{{ username }}</span>
+                    <div :class="$style.avatarContainer"
+                        :style="{ backgroundImage: `url(https://mc-heads.net/body/${userUUUID}/right)` }">
                     </div>
-                    <div :class="$style.mediaContent">
-                        <IconSettingsFilled :class="$style.mediaIcon" />
-                        <div :class="$style.mediaDivider"></div>
-                        <div :class="$style.mediaContainer">
-                            <IconBrandDiscordFilled :class="[$style.mediaDiscordIcon, $style.mediaIcon]" />
-                        </div>
-                        <div :class="$style.mediaContainer">
-                            <IconBrandGithubFilled :class="[$style.mediaGitHubIcon, $style.mediaIcon]" />
-                        </div>
+                </div>
+                <div :class="$style.mediaContent">
+                    <IconSettingsFilled :class="$style.mediaIcon" />
+                    <div :class="$style.mediaDivider"></div>
+                    <div :class="$style.mediaContainer">
+                        <IconBrandDiscordFilled :class="[$style.mediaDiscordIcon, $style.mediaIcon]" />
+                    </div>
+                    <div :class="$style.mediaContainer">
+                        <IconBrandGithubFilled :class="[$style.mediaGitHubIcon, $style.mediaIcon]" />
                     </div>
                 </div>
             </div>
         </div>
-        <LandingLower />
     </div>
+    <LandingLower />
 </template>
 
 <style module>
