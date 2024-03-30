@@ -10,6 +10,7 @@ const profileStore = useProfilesStore()
 const currentComponent = ref(Signin)
 
 
+
 onMounted(async () => {
   const profiles: Profiles = await window.electron.ipcRenderer.invoke('getProfiles')
   currentComponent.value = Object.keys(profiles).length === 0 ? Signin : Landing

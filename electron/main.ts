@@ -1,9 +1,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron'
 import path from 'node:path'
 import { authManager } from './msmc'
-import {Xbox} from 'msmc'
-import { Profiles, RawProfile } from './common'
-import {UserStorage, useUserStorage} from "./storage/user"
+import { RawProfile } from './common'
+import {useUserStorage} from "./storage/user"
 import { launch } from './launcher/launch'
 
 // The built directory structure
@@ -17,6 +16,7 @@ import { launch } from './launcher/launch'
 // │
 process.env.DIST = path.join(__dirname, '../dist')
 process.env.PUBLIC = app.isPackaged ? process.env.DIST : path.join(process.env.DIST, '../public')
+
 
 
 let win: BrowserWindow | null
@@ -36,6 +36,8 @@ function createWindow() {
     },
   })
 
+  win.setMenuBarVisibility(false)
+
   // Test active push message to Renderer-process.
   win.webContents.on('did-finish-load', () => {
     win?.webContents.send('main-process-message', (new Date).toLocaleString())
@@ -47,7 +49,9 @@ function createWindow() {
     // win.loadFile('dist/index.html')
     win.loadFile(path.join(process.env.DIST, 'index.html'), {hash: 'home'})
   }
+
 }
+
 
 app.on('window-all-closed', () => {
   win = null
@@ -78,5 +82,6 @@ ipcMain.handle('getProfiles', async(event) => {
 })
 
 ipcMain.handle('gameLaunch', async(event) => {
+  console.log('[Launch]: start')
   return await launch()
 })

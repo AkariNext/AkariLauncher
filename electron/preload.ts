@@ -1,6 +1,11 @@
-import { contextBridge, ipcRenderer, shell } from "electron"
-import { authManager } from "./msmc"
+import { contextBridge } from "electron"
 import { electronAPI } from '@electron-toolkit/preload'
+import { sysRoot } from "./common"
+import { mkdirp } from "mkdirp";
+
+mkdirp(sysRoot);
+
+
 
 function domReady(condition: DocumentReadyState[] = ['complete', 'interactive']) {
   return new Promise(resolve => {

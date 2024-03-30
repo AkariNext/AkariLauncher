@@ -1,4 +1,7 @@
 <script setup lang="ts">
+async function func() {
+    await window.electron.ipcRenderer.invoke('gameLaunch')
+}
 </script>
 
 <template>
@@ -24,7 +27,7 @@
         <div :class="$style.lower_right">
             <div>
                 <div :class="$style.launch_content">
-                    <button :class="$style.launch_button" class="text-white">PLAY</button>
+                    <button :class="$style.launch_button" class="text-white" @click="async () => await func()">PLAY</button>
                     <div :class="$style.bot_divider"></div>
                     <button :class="[$style.server_selection_button, $style.bot_label]" class="text-white">・Demo (Minecraft
                         1.19.4)</button>
