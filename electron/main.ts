@@ -52,6 +52,12 @@ function createWindow() {
 
 }
 
+const gotTheLock = app.requestSingleInstanceLock();
+if (!gotTheLock) {
+  throw Error('多重起動しています。')
+  // app.quit();
+}
+
 
 app.on('window-all-closed', () => {
   win = null

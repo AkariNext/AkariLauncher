@@ -1,0 +1,1 @@
+// todo: GameLog.vueをいい感じに出す場所
