@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ModalsContainer, useModal } from 'vue-final-modal'
+import { useModal } from 'vue-final-modal'
 import ServerSelectModal from '../ServerSelector/ServerSelectModal.vue'
 
 async function func() {
