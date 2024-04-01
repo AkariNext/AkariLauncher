@@ -5,6 +5,7 @@ import { Profiles } from '../electron/common';
 import { useProfilesStore } from './store/profiles';
 import Signin from './components/Signin.vue'
 import {randomBackgroundImage} from "./utils/common"
+import { ModalsContainer } from 'vue-final-modal'
 
 const profileStore = useProfilesStore()
 const currentComponent = ref(Signin)
@@ -32,6 +33,7 @@ profileStore.$subscribe((_, state) => {
     <component v-bind:is="currentComponent" class="xyz-in" />
   </div>
   </XyzTransitionGroup>
+  <ModalsContainer />
 </div>
 </template>
 
