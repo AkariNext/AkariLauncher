@@ -8,6 +8,8 @@ import nFetch from 'node-fetch'
 import { IAuth, ILauncherOptions } from "node_modules/@akarinext/minecraft-java-core/build/Launch";
 import { updateRepositories } from "../downloader";
 import { minecraftProcesses } from "../utils/state";
+import { createGameLogWindow } from "./log";
+import { BrowserWindow } from "electron";
 
 (async () => {
     updateRepositories()
@@ -96,8 +98,10 @@ export async function launch() {
 
     console.log(currentProcesses, foundProcesses)
 
+    let logWindow: BrowserWindow | null
     if (!foundProcesses) {
         minecraftProcesses.set([...currentProcesses, {profileName: PROFILE_NAME}])
+        logWindow = createGameLogWindow()
         await client.Launch(opts)
     } else {
         // ここからrenderの方に何か飛ばすようにする
@@ -132,6 +136,7 @@ export async function launch() {
     });
 
     client.on('data', (e: any) => {
+        logWindow?.webContents.send('logWindow.data', e)
         console.log(e);
     })
 
