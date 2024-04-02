@@ -31,7 +31,9 @@ const username = profileStore.$state.accounts[useProfileId].minecraft.profile!.n
                     </div>
                 </div>
                 <div :class="$style.mediaContent">
-                    <IconSettingsFilled :class="$style.mediaIcon" />
+                    <RouterLink to="/settings">
+                        <IconSettingsFilled :class="$style.mediaIcon" />
+                    </RouterLink>
                     <div :class="$style.mediaDivider"></div>
                     <div :class="$style.mediaContainer">
                         <IconBrandDiscordFilled :class="[$style.mediaDiscordIcon, $style.mediaIcon]" />
