@@ -101,7 +101,7 @@ export async function launch() {
     let logWindow: BrowserWindow | null
     if (!foundProcesses) {
         minecraftProcesses.set([...currentProcesses, {profileName: PROFILE_NAME}])
-        logWindow = createGameLogWindow()
+        logWindow = createGameLogWindow({profileName: PROFILE_NAME})
         await client.Launch(opts)
     } else {
         // ここからrenderの方に何か飛ばすようにする
