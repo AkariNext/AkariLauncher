@@ -3,6 +3,8 @@ import { useProfilesStore } from "../store/profiles";
 import { RawProfile } from "../../electron/common";
 import IconMicrosoft from "../assets/images/HeliosLauncher/icons/microsoft.svg";
 import { ElectronAPI } from "@electron-toolkit/preload";
+import MainLayout from "./Layout/MainLayout.vue"
+import { router } from "../routes/index";
 
 interface ElectronWindow extends Window {
     electron: ElectronAPI
@@ -15,25 +17,28 @@ const signin = async () => {
 
     const profileStore = useProfilesStore()
     profileStore.$patch(profiles)
+    router.push('/')
 }
 
 </script>
 
 <template>
-    <div :class="$style.signinOptionsContainer">
-        <div :class="$style.signinOptionsContent">
-            <h2 class="text-center text-2xl mb-4 text-white font-bold">Login Options</h2>
-            <div style="row-gap: 10px; display: flex; flex-direction: column;">
-                <div>
-                    <button type="button" @click="async () => await signin()" :class="$style.loginButton">
-                        <IconMicrosoft class="h-6 w-6" />
+    <MainLayout>
+        <div :class="$style.signinOptionsContainer">
+            <div :class="$style.signinOptionsContent">
+                <h2 class="text-center text-2xl mb-4 text-white font-bold">Login Options</h2>
+                <div style="row-gap: 10px; display: flex; flex-direction: column;">
+                    <div>
+                        <button type="button" @click="async () => await signin()" :class="$style.loginButton">
+                            <IconMicrosoft class="h-6 w-6" />
 
-                        Login with Microsoft
-                    </button>
+                            Login with Microsoft
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </MainLayout>
 </template>
 
 <style module>
