@@ -136,7 +136,9 @@ export async function launch() {
     });
 
     client.on('data', (e: any) => {
-        logWindow?.webContents.send('logWindow.data', e)
+        if (logWindow?.isDestroyed() === false) {
+            logWindow?.webContents.send('logWindow.data', e)
+        }
         console.log(e);
     })
 
