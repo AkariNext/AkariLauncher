@@ -4,6 +4,7 @@ import { Terminal } from '@xterm/xterm'
 import { WebglAddon } from '@xterm/addon-webgl'
 import { onMounted, ref } from 'vue';
 import { FitAddon } from 'xterm-addon-fit';
+import '@xterm/xterm/css/xterm.css'
 
 const terminal = ref<HTMLElement>();
 
@@ -13,20 +14,27 @@ interface ElectronWindow extends Window {
 declare const window: ElectronWindow;
 
 onMounted(() => {
-    const term = new Terminal();
+    const term = new Terminal({
+        cols: 40,
+        rows: 30
+
+    });
     const webglAddon = new WebglAddon();
     const fitAddon = new FitAddon();
 
     term.loadAddon(fitAddon);
 
-    term.open(terminal.value!);
     webglAddon.onContextLoss(_ => {
         webglAddon.dispose();
     });
+    
+    term.open(terminal.value!);
 
     term.loadAddon(webglAddon);
 
     fitAddon.fit();
+
+    
 
     window.electron.ipcRenderer.on('logWindow.data', (_, data) => {
         term.write(data);
@@ -35,7 +43,5 @@ onMounted(() => {
 </script>
 
 <template>
-    <div>
-    <div class="h-96 w-full" ref="terminal"></div>
-</div>
+    <div ref="terminal"></div>
 </template>
