@@ -144,6 +144,11 @@ export async function launch() {
 
     client.on('close', (code: any) => {
         console.log(code);
+
+        // TODO: 設定でオフにできるように
+        if (logWindow?.isDestroyed() === false) {
+            logWindow?.close();
+        };
         // 現在のプロファイルを一覧から削除する
         const currentProcesses = minecraftProcesses.get().filter((profile) => profile.profileName !== PROFILE_NAME)
 
