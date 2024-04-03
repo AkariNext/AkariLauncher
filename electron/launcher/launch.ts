@@ -145,6 +145,10 @@ export async function launch() {
     client.on('close', (code: any) => {
         console.log(code);
 
+        if (logWindow?.isDestroyed() === false) {
+            logWindow?.webContents.send('logWindow.close', `Minecraft closed: code ${code}`)
+        }
+
         // TODO: 設定でオフにできるように
         if (logWindow?.isDestroyed() === false) {
             logWindow?.close();
@@ -157,6 +161,10 @@ export async function launch() {
 
     client.on('error', (err: any) => {
         console.log(err);
+
+        if (logWindow?.isDestroyed() === false) {
+            logWindow?.webContents.send('logWindow.error', `Minecraft closed: code ${code}`)
+        }
     });
     // client.on('progress', (e) => console.log(e))
     // client.on('progress', function (e) {
