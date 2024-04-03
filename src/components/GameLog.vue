@@ -15,8 +15,8 @@ declare const window: ElectronWindow;
 
 onMounted(() => {
     const term = new Terminal({
-        cols: 40,
-        rows: 30
+        rows: 30,
+        fontFamily: '\'MoralerspaceNeonHWNF-Regular\', monospace',
 
     });
     const webglAddon = new WebglAddon();
@@ -45,3 +45,10 @@ onMounted(() => {
 <template>
     <div ref="terminal"></div>
 </template>
+
+<style>
+@font-face {
+    font-family: 'MoralerspaceNeonHWNF-Regular';
+    src: url('../assets/fonts/moralerspace/MoralerspaceNeonNF-Regular.ttf');
+}
+</style>
