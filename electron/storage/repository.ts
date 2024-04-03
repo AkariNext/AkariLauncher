@@ -1,27 +1,27 @@
-import { sysRoot } from "../common";
-import { getOrCreateJson, saveJson } from "../utils/dir";
-const repositoryPath = sysRoot.concat('/repository.json')
+import ElectronStore from "electron-store";
+
 
 
 class RepositoryStorage {
-    repositories: {distribution_url: string, base_url: string}[]
+    repositories: ElectronStore<{
+        repositories: { distribution_url: string }[]
+    }>
     constructor() {
-        this.repositories = getOrCreateJson(repositoryPath, []);
+        this.repositories = new ElectronStore<{
+            repositories: {
+                distribution_url: string
+            }[]
+        }
+        >({ name: "repositories", defaults: {repositories: []} })
     }
 
     async getRepositories() {
-        return this.repositories
+        return this.repositories.get('repositories')
     }
 
-    async addRepository(distribution_url: string, base_url: string) {
-        this.repositories = [...this.repositories, {distribution_url, base_url}]
-        await this.save()
-
+    async addRepository(distribution_url: string) {
+        this.repositories.set('repositories', [...this.repositories, { distribution_url }])
         return this.repositories
-    }
-
-    async save() {
-        await saveJson(repositoryPath, this.repositories)
     }
 }
 
