@@ -2,8 +2,9 @@
 import { ElectronAPI } from "@electron-toolkit/preload";
 import { Terminal } from '@xterm/xterm'
 import { WebglAddon } from '@xterm/addon-webgl'
+import { CanvasAddon } from "@xterm/addon-canvas";
+import { FitAddon } from '@xterm/addon-fit';
 import { onMounted, ref } from 'vue';
-import { FitAddon } from 'xterm-addon-fit';
 import '@xterm/xterm/css/xterm.css'
 
 const terminal = ref<HTMLElement>();
@@ -31,6 +32,7 @@ onMounted(() => {
 
     webglAddon.onContextLoss(_ => {
         webglAddon.dispose();
+        term.loadAddon(new CanvasAddon());
     });
     
     term.open(terminal.value!);
