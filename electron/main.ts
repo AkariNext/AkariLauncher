@@ -4,6 +4,7 @@ import { authManager } from './msmc'
 import { RawProfile } from './common'
 import {useUserStorage} from "./storage/user"
 import { launch } from './launcher/launch'
+import { updateRepositories } from './downloader'
 
 // The built directory structure
 //
@@ -76,6 +77,10 @@ ipcMain.handle('doAuth', async () => {
     return profile
   }
   return await doAuth()
+})
+
+ipcMain.handle('getModPacks', async (event) => {
+  return await updateRepositories(true)
 })
 
 ipcMain.handle('addAccount', async (event, profile: RawProfile) => {

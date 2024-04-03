@@ -24,15 +24,17 @@ export interface IFileStore {
 
 interface IModPackManifest {
     name: string;
-    server: {
-        serverHost: string;
-        serverPort: number;
-    };
+    servers: {
+        name: string;
+        address: string;
+        port: number;
+    }[];
     gameVersion: string;
     modLoader: {
         modLoaderType: "forge";
         modLoaderVersion: string;
     }
+    iconUrl: string | null;
     versions: string[]
 }
 
@@ -50,35 +52,42 @@ async function fetchModPack(repository: string, name: string, version: string) {
     return await res.json() as IModPack
 }
 
-async function fetchModpackManifest(repository: string, name: string) {
+async function fetchModpackManifest(repository: string, name: string, dryRun: boolean=false) {
     const url = `${repository}/modpacks/${name}/manifest.json`
     const res = await nodeFetch(url)
     const modpackManifest = await res.json() as IModPackManifest
-    for (const version of modpackManifest.versions) {
-        const versionData = await fetchModPack(repository, name, version)
-        //console.log(versionData)
-        downloader(repository, versionData, name)
+
+    if (dryRun === false) {
+        for (const version of modpackManifest.versions) {
+            const versionData = await fetchModPack(repository, name, version)
+            //console.log(versionData)
+            downloader(repository, versionData, name)
+        }
     }
     return modpackManifest
 }
 
-async function fetchDistribution(url: string) {
+async function fetchDistribution(url: string, dryRun: boolean=false) {
     const res = await nodeFetch(url)
     const data = await res.json() as IDsitribution
     console.log('name: ', data.name)
     console.log('found modpack(s)', data.modpacks.length)
+
+    const modpacks = []
     for (const modpack of data.modpacks) {
         console.log('=>', modpack)
-        await fetchModpackManifest(data.base_url, modpack)
+        modpacks.push(await fetchModpackManifest(data.base_url, modpack, dryRun))
     }
-    return data.modpacks;
+    return modpacks;
 }
 
-export async function updateRepositories() {
+export async function updateRepositories(dryRun: boolean=false) {
     const repositories = await useRepositoryStorage.getRepositories()
+    let result: IModPackManifest[] = []
     for (const repository of repositories) {
-        await fetchDistribution(repository.distribution_url)
+        result = [...result, ...await fetchDistribution(repository.distribution_url, dryRun)];
     }
+    return result;
 }
 
 
